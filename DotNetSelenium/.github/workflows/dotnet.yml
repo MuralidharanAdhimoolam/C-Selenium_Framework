@@ -18,14 +18,11 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Debug - Find project files
-      run: find . -name "*.csproj" -o -name "*.sln"
-
     - name: Restore dependencies
-      run: dotnet restore DotNetSelenium/DotNetSelenium.csproj
+      run: dotnet restore $(find . -name "*.csproj" | head -1)
 
     - name: Build project
-      run: dotnet build DotNetSelenium/DotNetSelenium.csproj --no-restore
+      run: dotnet build $(find . -name "*.csproj" | head -1) --no-restore
 
     - name: Run tests
-      run: dotnet test DotNetSelenium/DotNetSelenium.csproj --no-build --verbosity normal
+      run: dotnet test $(find . -name "*.csproj" | head -1) --no-build --verbosity normal
