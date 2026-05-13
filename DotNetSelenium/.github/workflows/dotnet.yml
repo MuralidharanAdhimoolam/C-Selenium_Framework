@@ -19,13 +19,13 @@ jobs:
         dotnet-version: '10.0.x'
 
     - name: Restore dependencies
-      working-directory: DotNetSelenium
+      working-directory: C:\Users\adhi5\source\repos\DotNetSelenium\DotNetSelenium\DotNetSelenium.csproj
       run: dotnet restore
 
     - name: Build project
-      working-directory: DotNetSelenium
+      working-directory: C:\Users\adhi5\source\repos\DotNetSelenium\DotNetSelenium\DotNetSelenium.csproj
       run: dotnet build --no-restore
 
     - name: Run tests
-      working-directory: DotNetSelenium
+      working-directory: C:\Users\adhi5\source\repos\DotNetSelenium\DotNetSelenium\DotNetSelenium.csproj
       run: dotnet test --no-build
