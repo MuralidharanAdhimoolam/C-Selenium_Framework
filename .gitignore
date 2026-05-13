@@ -1,0 +1,26 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build folders
+bin/
+obj/
+out/
+
+# Test results
+TestResults/
+*.trx
+
+# Rider / other IDEs
+.idea/
+*.DotSettings.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
