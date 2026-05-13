@@ -1,24 +1,31 @@
-﻿jobs:
-  build-and-test:
-    runs-on: windows-latest
+﻿name: Selenium Tests
 
-    defaults:
-      run:
-        shell: pwsh  # force PowerShell instead of bash
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
-    - name: Restore
-      run: dotnet restore DotNetSelenium\DotNetSelenium.csproj
+    - name: Debug - Find project files
+      run: find . -name "*.csproj" -o -name "*.sln"
 
-    - name: Build
-      run: dotnet build DotNetSelenium\DotNetSelenium.csproj --no-restore
+    - name: Restore dependencies
+      run: dotnet restore DotNetSelenium/DotNetSelenium.csproj
 
-    - name: Test
-      run: dotnet test DotNetSelenium\DotNetSelenium.csproj --no-build
+    - name: Build project
+      run: dotnet build DotNetSelenium/DotNetSelenium.csproj --no-restore
+
+    - name: Run tests
+      run: dotnet test DotNetSelenium/DotNetSelenium.csproj --no-build --verbosity normal
