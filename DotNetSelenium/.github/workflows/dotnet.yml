@@ -8,21 +8,28 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore $(find . -name "*.csproj" | head -1)
+    - name: Install Chrome
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
 
-    - name: Build project
-      run: dotnet build $(find . -name "*.csproj" | head -1) --no-restore
+    - name: Restore
+      run: dotnet restore DotNetSelenium/DotNetSelenium.csproj
 
-    - name: Run tests
-      run: dotnet test $(find . -name "*.csproj" | head -1) --no-build --verbosity normal
+    - name: Build
+      run: dotnet build DotNetSelenium/DotNetSelenium.csproj --no-restore
+
+    - name: Run Tests
+      run: dotnet test DotNetSelenium/DotNetSelenium.csproj --no-build --verbosity normal
+      env:
+        DISPLAY: :99

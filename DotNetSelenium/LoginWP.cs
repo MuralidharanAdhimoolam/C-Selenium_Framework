@@ -9,9 +9,11 @@ public class Test
     [Test]
     public void Test1()
     {
-        ChromeOptions options = new ChromeOptions();
-        options.AddArgument("--headless=new");
-        IWebDriver driver = new ChromeDriver(options);
+        var options = new ChromeOptions();
+        options.AddArgument("--headless");
+        options.AddArgument("--no-sandbox");
+        options.AddArgument("--disable-dev-shm-usage");
+        var driver = new ChromeDriver(options);
         driver.Navigate().GoToUrl("http://eaapp.somee.com/");
         driver.Manage().Window.Maximize();
         //IWebElement webElement = driver.FindElement(By.XPath("//button//div[contains(text(),'Alle akzeptieren')]"));
