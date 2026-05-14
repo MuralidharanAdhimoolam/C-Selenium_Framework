@@ -11,9 +11,10 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-    - name: Setup .NET
+    - name: Setup .NET 8
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
@@ -31,5 +32,3 @@ jobs:
 
     - name: Run Tests
       run: dotnet test DotNetSelenium/DotNetSelenium.csproj --no-build --verbosity normal
-      env:
-        DISPLAY: :99
