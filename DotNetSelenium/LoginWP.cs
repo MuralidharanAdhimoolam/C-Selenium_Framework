@@ -2,10 +2,12 @@
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
+
 public class Test
 {
-
     [Test]
     public void Test1()
     {
@@ -13,25 +15,24 @@ public class Test
         options.AddArgument("--headless");
         options.AddArgument("--no-sandbox");
         options.AddArgument("--disable-dev-shm-usage");
+        options.AddArgument("--window-size=1920,1080");
         var driver = new ChromeDriver(options);
-        driver.Navigate().GoToUrl("http://eaapp.somee.com/");
-        driver.Manage().Window.Maximize();
-        //IWebElement webElement = driver.FindElement(By.XPath("//button//div[contains(text(),'Alle akzeptieren')]"));
-        //webElement.Click();
-        SeleniumCustomMethods.Click(driver, By.LinkText("Login"));
-        //driver.FindElement(By.LinkText("Login")).Click();
-        //IWebElement UserName = driver.FindElement(By.Name("UserName"));
-        //UserName.SendKeys("Admin");
-        SeleniumCustomMethods.EnterText(driver, By.Name("UserName"), "Admin");
-        //IWebElement Password = driver.FindElement(By.Id("Password"));
-        //Password.SendKeys("password");
-        SeleniumCustomMethods.EnterText(driver, By.Id("Password"), "password");
-        IWebElement btnLogin = driver.FindElement(By.CssSelector(".btn"));
-        btnLogin.Submit();
 
+        driver.Navigate().GoToUrl("http://eaapp.somee.com/");
+
+        SeleniumCustomMethods.Click(driver, By.LinkText("Login"));
+        SeleniumCustomMethods.EnterText(driver, By.Name("UserName"), "Admin");
+        SeleniumCustomMethods.EnterText(driver, By.Id("Password"), "password");
+
+        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        IWebElement btnLogin = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".btn-signin")));
+        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+        js.ExecuteScript("arguments[0].click();", btnLogin);
+
+        driver.Quit();
     }
+
     public void Test2()
     {
-
     }
 }

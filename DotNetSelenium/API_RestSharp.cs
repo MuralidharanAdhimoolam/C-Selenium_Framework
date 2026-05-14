@@ -9,8 +9,13 @@ namespace ApiTesting
         [Test]
         public void GetUsersTest()
         {
-            var client = new RestClient("https://reqres.in");
-            var request = new RestRequest("/api/users?page=2");
+            var options = new RestClientOptions("https://jsonplaceholder.typicode.com")
+            {
+                MaxTimeout = 10000
+            };
+            var client = new RestClient(options);
+            var request = new RestRequest("/users");
+            request.AddHeader("Accept", "application/json");
 
             var response = client.Execute(request);
 
