@@ -9,11 +9,7 @@ namespace ApiTesting
         [Test]
         public void GetUsersTest()
         {
-            var options = new RestClientOptions("https://jsonplaceholder.typicode.com")
-            {
-                MaxTimeout = 10000
-            };
-            var client = new RestClient(options);
+            var client = new RestClient("https://jsonplaceholder.typicode.com");
             var request = new RestRequest("/users");
             request.AddHeader("Accept", "application/json");
 
